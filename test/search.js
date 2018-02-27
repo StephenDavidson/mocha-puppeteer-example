@@ -1,30 +1,14 @@
-const { expect } = require('chai');
-const puppeteer = require('puppeteer');
-
 describe('Search', () => {
-  const url = 'https://duckduckgo.com';
-  let browser;
-  let page;
-
-  before(async () => {
-    browser = await puppeteer.launch();
-  });
-
-  beforeEach(async () => {
-    page = await browser.newPage();
-    await page.goto(url);
-  });
-
-  after(async () => {
-    await browser.close();
-  });
-
-  it('should display results', async() => {
-      await page.type('#search_form_input_homepage', 'test');
+  it('should return result "Apple"', async() => {
+      await page.type('#search_form_input_homepage', 'Apple Wiki');
       await page.click('#search_button_homepage');
-      await page.waitForSelector('.result__a');
-      const searchResult = await page.$('.result__a');
-      expect(searchResult).to.exist;
+      const searchResult = await page.waitForSelector('.result__a');
+      const valueHandle = await searchResult.getProperty('innerHTML');
+      expect(await valueHandle.jsonValue()).to.include('Apple');
+  });
+
+  it('page title should contain "DuckDuckGo"', async() => {
+    expect(await page.title()).to.include('DuckDuckGo');
   });
 });
 
