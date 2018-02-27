@@ -5,7 +5,7 @@ const url = 'https://duckduckgo.com';
 global.expect = expect;
 
 before(async () => {
-  global.browser = await puppeteer.launch({headless: false});
+  global.browser = await puppeteer.launch();
 });
 
 beforeEach(async () => {
