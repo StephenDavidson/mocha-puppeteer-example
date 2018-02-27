@@ -1,10 +1,15 @@
+sudo: required
 os:
   - osx
+  - linux
 
 language: node_js
 
 node_js:
   - "lts/*"
+
+addons:
+  chrome: stable
 
 cache:
   directories:
